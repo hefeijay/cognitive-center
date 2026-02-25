@@ -1,0 +1,25 @@
+{
+  "topic": "项目部署问题",
+  "topic_normalized": "project_deployment_issues", 
+  "created_at_utc": "2023-10-27T10:00:00Z",
+  "updated_at_utc": "2023-10-27T10:30:00Z",  
+  "summary": "用户在部署Nginx时遇到WebSocket 400错误。初步诊断为缺少代理头设置，已建议用户检查配置。目前正在等待用户反馈，并准备排查防火墙或系统安全策略。",
+  "history": [
+    {
+      "role": "user",
+      "content": "我的Nginx代理WebSocket失败了，总是400错误。"
+    },
+    {
+      "role": "assistant",
+      "content": "这通常是由于缺少必要的代理头设置。请检查你的Nginx配置中是否包含了 `proxy_set_header Upgrade $http_upgrade;` 和 `proxy_set_header Connection \"Upgrade\";` 这两行？"
+    },
+    {
+      "role": "user",
+      "content": "我们上次讨论的那个部署问题，你有什么新想法吗？"
+    },
+    {
+      "role": "assistant",
+      "content": "当然。基于上次的讨论，我们可以进一步排查防火墙或者SELinux/AppArmor等安全策略是否阻止了127.0.0.1的内部端口通信。你可以检查一下服务的运行日志看是否有权限相关的错误。"
+    }
+  ]
+}

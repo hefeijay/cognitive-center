@@ -1,0 +1,43 @@
+# 核心依赖
+langchain==0.3.27
+langchain-core==0.3.76
+langchain-openai==0.3.33
+langchain-community
+langchain-text-splitters==0.3.11
+langgraph
+langgraph-checkpoint
+langgraph-prebuilt
+langgraph-sdk
+langsmith
+
+# OpenAI
+openai==1.107.3
+
+# 数据库
+sqlalchemy
+pydantic
+pydantic-settings
+
+# 工具和实用程序
+python-dotenv
+requests
+requests-toolbelt
+httpx
+aiohttp
+
+# 搜索和检索
+duckduckgo-search
+tavily-python
+
+# 数据处理
+orjson
+ormsgpack
+lxml
+xxhash
+
+# 开发和测试
+pytest
+pytest-asyncio
+
+# 其他
+primp
