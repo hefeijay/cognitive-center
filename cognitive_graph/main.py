@@ -21,7 +21,9 @@ from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
 
 # 添加项目根目录到Python路径
-sys.path.append('/usr/henry/cognitive-center')
+sys.path.append('/home/gmm/srv/cognitive-center')
+# 使用 japan-aquaculture-project 的数据库模型
+sys.path.append('/home/gmm/srv/japan-aquaculture-project/backend')
 
 from cognitive_graph.agents import MultiAgentCollaborationFramework
 from cognitive_graph.database import DatabaseManager
@@ -126,7 +128,7 @@ def run_continuous_mode():
     print("🚀 启动多智能体协作系统 - 持续处理模式")
     print(f"📊 系统配置:")
     print(f"  数据库: {config.DATABASE_URL.split('/')[-1] if '/' in config.DATABASE_URL else config.DATABASE_URL}")
-    print(f"  OpenAI模型: gpt-4o-mini")
+    print(f"  OpenRouter模型: {config.OPENROUTER_MODEL}")
     print(f"  最大对话轮次: {config.MAX_CONVERSATION_ROUNDS}")
     print(f"  消息轮询间隔: {config.MESSAGE_POLL_INTERVAL}秒")
     print(f"  消息批处理大小: {config.MESSAGE_BATCH_SIZE}")

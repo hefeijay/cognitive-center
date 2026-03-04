@@ -141,8 +141,16 @@ def router(state: AgentState) -> str:
 
 # --- 构建图 ---
 
-# 1. 初始化模型
-llm = ChatOpenAI(model="gpt-4o")
+# 1. 初始化模型 - 使用 OpenRouter 配置
+import sys
+sys.path.append('/home/gmm/srv/cognitive-center')
+from cognitive_graph.config import config
+
+llm = ChatOpenAI(
+    model=config.OPENROUTER_MODEL,
+    openai_api_base=config.OPENROUTER_BASE_URL,
+    openai_api_key=config.OPENROUTER_API_KEY
+)
 
 # 2. 创建智能体节点
 researcher_llm = llm.bind_tools([tool])

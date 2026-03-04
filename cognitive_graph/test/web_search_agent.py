@@ -32,9 +32,17 @@ class AgentState(TypedDict):
 
 
 # --- 初始化模型 ---
-# 我们将使用 OpenAI 的 gpt-4o 模型
+# 使用 OpenRouter 配置
+import sys
+sys.path.append('/home/gmm/srv/cognitive-center')
+from cognitive_graph.config import config
+
 # 并将工具绑定到模型上，让模型知道有哪些工具可用
-model = ChatOpenAI(model="gpt-4o").bind_tools(tools)
+model = ChatOpenAI(
+    model=config.OPENROUTER_MODEL,
+    openai_api_base=config.OPENROUTER_BASE_URL,
+    openai_api_key=config.OPENROUTER_API_KEY
+).bind_tools(tools)
 
 
 # --- 定义图的节点 ---

@@ -30,8 +30,16 @@ class State(TypedDict):
 
 
 # 初始化模型
-# 我们将使用 OpenAI 的 gpt-4o 模型
-llm = ChatOpenAI(model="gpt-4o")
+# 使用 OpenRouter 配置
+import sys
+sys.path.append('/home/gmm/srv/cognitive-center')
+from cognitive_graph.config import config
+
+llm = ChatOpenAI(
+    model=config.OPENROUTER_MODEL,
+    openai_api_base=config.OPENROUTER_BASE_URL,
+    openai_api_key=config.OPENROUTER_API_KEY
+)
 
 # 将模型和工具绑定，让模型知道有哪些工具可用
 llm_with_tools = llm.bind_tools([add])

@@ -14,7 +14,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc, and_
 
 # 添加项目根目录到Python路径
-sys.path.append('/usr/henry/cognitive-center')
+sys.path.append('/home/gmm/srv/cognitive-center')
+# 使用 japan-aquaculture-project 的数据库模型
+sys.path.append('/home/gmm/srv/japan-aquaculture-project/backend')
 
 from db_models.message_queue import MessageQueue
 from db_models.ai_decision import AIDecision

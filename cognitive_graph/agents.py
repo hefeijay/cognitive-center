@@ -35,7 +35,13 @@ class MultiAgentCollaborationFramework:
     """多智能体协作框架"""
     
     def __init__(self):
-        self.llm = ChatOpenAI(model="gpt-4o")
+        # 使用OpenRouter配置
+        self.llm = ChatOpenAI(
+            model=config.OPENROUTER_MODEL,
+            openai_api_base=config.OPENROUTER_BASE_URL,
+            openai_api_key=config.OPENROUTER_API_KEY,
+            temperature=0.7
+        )
         self.db_manager = DatabaseManager()
         self.graph = None
         self.agents = {}

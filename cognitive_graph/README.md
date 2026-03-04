@@ -36,13 +36,13 @@ cognitive_graph/
 ## 安装依赖
 
 ```bash
-cd /usr/henry/cognitive-center/cognitive_graph
+cd /home/gmm/srv/cognitive-center/cognitive_graph
 pip install -r requirements.txt
 ```
 
 ## 配置环境
 
-在 `/usr/henry/cognitive-center/.env` 文件中配置以下环境变量：
+在 `/home/gmm/srv/cognitive-center/cognitive_graph/.env` 文件中配置以下环境变量：
 
 ```env
 DATABASE_URL=sqlite:///cognitive_center.db

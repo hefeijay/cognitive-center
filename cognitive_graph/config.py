@@ -18,18 +18,37 @@ class CognitiveGraphConfig(BaseSettings):
     # 数据库配置
     DATABASE_URL: str = "sqlite:///cognitive_graph.db"
     
-    # OpenAI API配置 - 从.env文件读取并清理特殊字符
-    OPENAI_API_KEY: str
+    # MySQL 单独配置（可选，如果不提供 DATABASE_URL 则从这些配置构建）
+    MYSQL_HOST: Optional[str] = None
+    MYSQL_PORT: Optional[int] = None
+    MYSQL_USER: Optional[str] = None
+    MYSQL_PASSWORD: Optional[str] = None
+    MYSQL_DATABASE: Optional[str] = None
+    
+    # OpenRouter API配置 - 从.env文件读取并清理特殊字符
+    OPENROUTER_API_KEY: str
+    OPENROUTER_MODEL: str = "anthropic/claude-3.5-sonnet"  # 默认模型
+    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # 清理API密钥中的特殊字符
-        if self.OPENAI_API_KEY:
-            self.OPENAI_API_KEY = self.OPENAI_API_KEY.replace('\r', '').replace('\n', '').strip()
+        if self.OPENROUTER_API_KEY:
+            self.OPENROUTER_API_KEY = self.OPENROUTER_API_KEY.replace('\r', '').replace('\n', '').strip()
+        
+        # 如果 DATABASE_URL 为默认值且提供了 MySQL 配置，则构建 MySQL URL
+        if self.DATABASE_URL == "sqlite:///cognitive_graph.db" and all([
+            self.MYSQL_HOST, self.MYSQL_PORT, self.MYSQL_USER, 
+            self.MYSQL_PASSWORD, self.MYSQL_DATABASE
+        ]):
+            self.DATABASE_URL = (
+                f"mysql+pymysql://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}"
+                f"@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DATABASE}"
+            )
     
     # 项目路径配置
-    PROJECT_ROOT_PATH: str = "/usr/henry/cognitive-center"
-    COGNITIVE_MODEL_PATH: str = "/usr/henry/cognitive-center/cognitive_model"
+    PROJECT_ROOT_PATH: str = "/home/gmm/srv/cognitive-center"
+    COGNITIVE_MODEL_PATH: str = "/home/gmm/srv/cognitive-center/cognitive_model"
     
     # MCP服务配置
     MCP_SERVER_URL: Optional[str] = "http://localhost:8080"
@@ -80,6 +99,9 @@ def close_db_session(session):
         pass
 
 
-# 设置OpenAI API Key
-os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
-print(f"秘钥：{os.environ['OPENAI_API_KEY']}")
+# 设置OpenRouter API Key (使用OpenAI兼容接口)
+os.environ["OPENAI_API_KEY"] = config.OPENROUTER_API_KEY
+os.environ["OPENAI_API_BASE"] = config.OPENROUTER_BASE_URL
+print(f"OpenRouter API Key: {config.OPENROUTER_API_KEY[:20]}...")
+print(f"OpenRouter Base URL: {config.OPENROUTER_BASE_URL}")
+print(f"OpenRouter Model: {config.OPENROUTER_MODEL}")
